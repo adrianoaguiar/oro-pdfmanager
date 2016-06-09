@@ -1,7 +1,7 @@
 {
-    "name": "marello/orocrm-pdfmanager",
+    "name": "marello/oro-pdfmanager",
     "description": "Ibnab PDF Manager",
-    "homepage": "https://github.com/marellocommerce/orocrm-pdfmanager.git",
+    "homepage": "https://github.com/marellocommerce/oro-pdfmanager.git",
     "license": "OSL-3.0",
     "authors": [
         {
