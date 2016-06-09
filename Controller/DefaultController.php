@@ -78,7 +78,6 @@ class DefaultController extends Controller
              $attachment->setFile($file);
              $em->persist($attachment);
              $em->flush();             
-             //var_dump($attachment);die(); 
              $responseData['attachment_id'] = $attachment->getId();
             }
             
