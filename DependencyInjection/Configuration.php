@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('ibnab_pmanager');
         $rootNode
             ->children()
-                ->scalarNode('file')->defaultValue('%kernel.root_dir%/../vendor/ibnab/orocrm-pdfmanager/src/Ibnab/Bundle/PmanagerBundle/Lib/tcpdf/tcpdf.php')->end()
+                ->scalarNode('file')->defaultValue('%kernel.root_dir%/../vendor/marello/oro-pdfmanager/src/Ibnab/Bundle/PmanagerBundle/Lib/tcpdf/tcpdf.php')->end()
                 ->scalarNode('class')->defaultValue('TCPDF')->end()
             ->end()
         ;
@@ -50,13 +50,13 @@ class Configuration implements ConfigurationInterface
 
                         // Core configuration values
                         // These get defined when the TCPDF bundle is booted
-                        ->scalarNode('k_path_url')->defaultValue('%kernel.root_dir%/../vendor/ibnab/orocrm-pdfmanager/src/Ibnab/Bundle/PmanagerBundle/Lib/tcpdf/')->end()
-                        ->scalarNode('k_path_main')->defaultValue('%kernel.root_dir%/../vendor/ibnab/orocrm-pdfmanager/src/Ibnab/Bundle/PmanagerBundle/Lib/tcpdf/')->end()
-                        ->scalarNode('k_path_fonts')->defaultValue('%kernel.root_dir%/../vendor/ibnab/orocrm-pdfmanager/src/Ibnab/Bundle/PmanagerBundle/Lib/fonts/')->end()
+                        ->scalarNode('k_path_url')->defaultValue('%kernel.root_dir%/../vendor/marello/oro-pdfmanager/src/Ibnab/Bundle/PmanagerBundle/Lib/tcpdf/')->end()
+                        ->scalarNode('k_path_main')->defaultValue('%kernel.root_dir%/../vendor/marello/oro-pdfmanager/src/Ibnab/Bundle/PmanagerBundle/Lib/tcpdf/')->end()
+                        ->scalarNode('k_path_fonts')->defaultValue('%kernel.root_dir%/../vendor/marello/oro-pdfmanager/src/Ibnab/Bundle/PmanagerBundle/Lib/fonts/')->end()
                         ->scalarNode('k_path_cache')->defaultValue('%kernel.cache_dir%/tcpdf')->end()
                         ->scalarNode('k_path_url_cache')->defaultValue('%kernel.cache_dir%/tcpdf')->end()
-                        ->scalarNode('k_path_images')->defaultValue('%kernel.root_dir%/../vendor/ibnab/orocrm-pdfmanager/src/Ibnab/Bundle/PmanagerBundle/Lib/tcpdf/examples/images/')->end()
-                        ->scalarNode('k_blank_image')->defaultValue('%kernel.root_dir%/../vendor/ibnab/orocrm-pdfmanager/src/Ibnab/Bundle/PmanagerBundle/Lib/tcpdf/examples/images/_blank.png')->end()
+                        ->scalarNode('k_path_images')->defaultValue('%kernel.root_dir%/../vendor/marello/oro-pdfmanager/src/Ibnab/Bundle/PmanagerBundle/Lib/tcpdf/examples/images/')->end()
+                        ->scalarNode('k_blank_image')->defaultValue('%kernel.root_dir%/../vendor/marello/oro-pdfmanager/src/Ibnab/Bundle/PmanagerBundle/Lib/tcpdf/examples/images/_blank.png')->end()
                         ->scalarNode('k_cell_height_ratio')->defaultValue(1.25)->end()
                         ->scalarNode('k_title_magnification')->defaultValue(1.3)->end()
                         ->scalarNode('k_small_ratio')->defaultValue(2/3)->end()
