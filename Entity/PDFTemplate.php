@@ -282,7 +282,7 @@ class PDFTemplate extends ExtendPDFTemplate implements PDFTemplateInterface, Tra
     public function addTemplateParams($params)
     {
         if (is_array($params)) {
-            array_merge($this->templateParams, $params);
+            $this->templateParams = array_merge($this->templateParams, $params);
         }
 
         if (is_string($params)) {
