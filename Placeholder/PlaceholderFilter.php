@@ -31,13 +31,7 @@ class PlaceholderFilter
     }
     public function getAllowedSection()
     {
-      $values['allowed'] = ['OroCRM\Bundle\ContactBundle\Entity\Contact',
-                             'OroCRM\Bundle\MagentoBundle\Entity\Order',
-                             'OroCRM\Bundle\SalesBundle\Entity\Lead',
-                             'OroCRM\Bundle\SalesBundle\Entity\Opportunity',
-                             'OroCRM\Bundle\AccountBundle\Entity\Account',
-                             'OroCRM\Bundle\MagentoBundle\Entity\Customer',
-                             'OroCRM\Bundle\MagentoBundle\Entity\Cart'];
+      $values['allowed'] = [];
       return $values;
     }
     /**

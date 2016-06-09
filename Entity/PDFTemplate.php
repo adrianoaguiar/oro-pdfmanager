@@ -262,13 +262,55 @@ class PDFTemplate extends ExtendPDFTemplate implements PDFTemplateInterface, Tra
     protected $organization;
 
     /**
+     * @var array
+     */
+    protected $templateParams = [
+        'name',
+        'entityName',
+        'isSystem',
+        'isEditable',
+        'marginleft',
+        'marginright',
+        'margintop',
+        'marginbottom',
+        'autobreak',
+        'unit',
+        'format',
+        'orientation'
+    ];
+
+    public function addTemplateParams($params)
+    {
+        if (is_array($params)) {
+            array_merge($this->templateParams, $params);
+        }
+
+        if (is_string($params)) {
+            array_push($this->templateParams, $params);
+        }
+    }
+
+    public function getTemplateParams()
+    {
+        return $this->templateParams;
+    }
+
+    public function setTemplateParams($params)
+    {
+        $this->templateParams = $params;
+
+        return $this;
+    }
+
+    /**
      * @param $name
      * @param string $content
      * @param string $type
      * @param bool $isSystem
+     * @param array $extraParams
      * @internal param $entityName
      */
-    public function __construct($name = '', $content = '', $type = 'html', $isSystem = false)
+    public function __construct($name = '', $content = '', $type = 'html', $isSystem = false, $extraParams = array())
     {
         // name can be overridden from pdf template
         $this->name = $name;
@@ -276,10 +318,11 @@ class PDFTemplate extends ExtendPDFTemplate implements PDFTemplateInterface, Tra
         $this->isSystem = $isSystem;
         // isEditable can be overridden from pdf template
         $this->isEditable = false;
+        // Adds extra params
+        $this->addTemplateParams($extraParams);
 
         $boolParams = array('isSystem', 'isEditable');
-        $templateParams = array('name',  'entityName', 'isSystem', 'isEditable');
-        foreach ($templateParams as $templateParam) {
+        foreach ($this->templateParams as $templateParam) {
             if (preg_match('#@' . $templateParam . '\s?=\s?(.*)\n#i', $content, $match)) {
                 $val = trim($match[1]);
                 if (isset($boolParams[$templateParam])) {
