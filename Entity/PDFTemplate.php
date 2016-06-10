@@ -266,6 +266,7 @@ class PDFTemplate extends ExtendPDFTemplate implements PDFTemplateInterface, Tra
      */
     protected $templateParams = [
         'name',
+        'description',
         'entityName',
         'isSystem',
         'isEditable',
