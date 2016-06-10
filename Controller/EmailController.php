@@ -77,4 +77,14 @@ class EmailController extends BaseController
         $emailModel->setAttachmentsAvailable([$modelEmailAttachment]);
         return $this->process($emailModel);
     }
+
+    /**
+     * @param Email $entity
+     * @return array
+     * @Template("OroEmailBundle:Email:view.html.twig")
+     */
+    public function viewAction(Email $entity)
+    {
+        return parent::viewAction($entity);
+    }
 }

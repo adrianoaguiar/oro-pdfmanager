@@ -185,7 +185,7 @@ class DefaultController extends Controller
         return $responseData;
     }
     /**
-     * @Route("/view/{entityName}", name="pmanager_defaut_view")
+     * @Route("/view/pdf/{entityName}", name="pmanager_defaut_view")
      * @Acl(
      *      id="pmanager_defaut_view",
      *      type="entity",
