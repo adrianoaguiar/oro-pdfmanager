@@ -58,7 +58,7 @@ class EmailController extends BaseController
         
         $emailModel = $this->get('oro_email.email.model.builder')->createEmailModel();
         $attachmentId = $this->get('request')->get('attachmentId');
-       $attachment = $this->getDoctrine()
+        $attachment = $this->getDoctrine()
             ->getRepository('OroAttachmentBundle:Attachment')
             ->findOneBy(array('id' => $attachmentId));
         $emailAttachment = new EmailAttachment();
@@ -73,7 +73,6 @@ class EmailController extends BaseController
         $modelEmailAttachment->setModified($attachment->getFile()->getUpdatedAt());
         $modelEmailAttachment->setId($attachment->getId());
         $modelEmailAttachment->setEmailAttachment($emailAttachment);
-        //$emailModel->addAttachment($modelEmailAttachment);
         $emailModel->setAttachmentsAvailable([$modelEmailAttachment]);
         return $this->process($emailModel);
     }

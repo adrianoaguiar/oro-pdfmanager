@@ -5,7 +5,7 @@ namespace Ibnab\Bundle\PmanagerBundle\Model;
 use Oro\Bundle\ActivityBundle\Model\ActivityInterface;
 use Oro\Bundle\ActivityBundle\Model\ExtendActivity;
 
-class ExtendPDFTemplate implements ActivityInterface 
+class ExtendPDFTemplate implements ActivityInterface
 {
     use ExtendActivity;
 

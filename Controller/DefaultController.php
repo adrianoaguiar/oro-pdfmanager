@@ -11,10 +11,9 @@ use Oro\Bundle\SecurityBundle\Annotation\AclAncestor;
 use Ibnab\Bundle\PmanagerBundle\Entity\PDFTemplate;
 use Symfony\Component\Routing\RouterInterface;
 use Oro\Bundle\AttachmentBundle\Entity\Attachment;
+
 class DefaultController extends Controller
 {
-    const CONTACT_ENTITY_NAME = 'OroCRM\Bundle\ContactBundle\Entity\Contact';
-    const ORDER_ENTITY_NAME = 'OroCRM\Bundle\MagentoBundle\Entity\Order';
      /**
      * @Acl(
      *      id="pmanager_default_index",
@@ -27,103 +26,113 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-
         $responseData = [
             'saved'  => false
-        ];  
+        ];
+        
         $info = $this->get('request')->get('ibnab_pmanager_exportpdf');
         $importForm = $this->createForm('ibnab_pmanager_exportpdf');
-        $attachmentManager = $this->get('oro_attachment.manager');
         $responseData['form'] = $importForm->createView();
-        //$importForm = $this->createForm('ibnab_pmanager_exportpdf');
         $responseData['entityClass'] = $info['entityClass'];
         $responseData['entityId'] = $info['entityId'];
         $responseData['process'] = $info['process'] ? $info['process'] : "download" ;
-        $pdftemplateEntity = new PDFTemplate();
 
-        if ($templateResult = $this->get('ibnab_pmanager.form.handler.exportpdf')->process())     {
+        if ($templateResult = $this->get('ibnab_pmanager.form.handler.exportpdf')->process()) {
             $entity = $this->getDoctrine()
-            ->getRepository($info['entityClass'])
-            ->findOneBy(array('id' => $info['entityId']));
-             $templateParams = [
+                ->getRepository($info['entityClass'])
+                ->findOneBy(array('id' => $info['entityId']));
+            $templateParams = [
                 'entity'  => $entity
-             ];
-             $pdfObj = $this->instancePDF($templateResult);
-             $pdfObj->AddPage();
-             $outputFormat = 'pdf';
-             $resultForPDF = $this->get('oro_email.email_renderer')
-            ->renderWithDefaultFilters($templateResult->getContent(),$templateParams);
-             $resultForPDF = $templateResult->getCss().$resultForPDF;
-              $responseData['resultForPDF'] = $resultForPDF;
+            ];
+    
+            $pdfObj = $this->instancePDF($templateResult);
+            $pdfObj->AddPage();
+            $outputFormat = 'pdf';
+            $resultForPDF = $this->get('oro_email.email_renderer')
+                ->renderWithDefaultFilters($templateResult->getContent(), $templateParams);
+
+            $resultForPDF = $templateResult->getCss().$resultForPDF;
+            $responseData['resultForPDF'] = $resultForPDF;
             $pdfObj->writeHTML($responseData['resultForPDF'], true, 0, true, 0);
             $pdfObj->lastPage();
-    
-            //substr($info['entityClass'], strrpos($str, '\\') + 1)
+        
             $fileName   = $this->getExportHandler()->fileSystemOperator
-            ->generateTemporaryFileName($info['entityId'], $outputFormat);
+                ->generateTemporaryFileName($info['entityId'], $outputFormat);
             $pdfObj->Output($fileName, 'F');
             $url     =  $this->get('router')->generate(
                 'oro_importexport_export_download',
                 ['fileName' => basename($fileName)]
             );
-            if($info['process']=='attach')
-            {
-             $attachment = new Attachment();
-             $file = $this->getAttachmentManager()->prepareRemoteFile($fileName);
-             $this->getAttachmentManager()->upload($file);
-             //$attachment->save()
-             $em = $this->getDoctrine()->getManager();
-             $em->persist($file);
-             $em->flush();
-             $attachment->setFile($file);
-             $em->persist($attachment);
-             $em->flush();             
-             $responseData['attachment_id'] = $attachment->getId();
-            }
             
+            if ($info['process'] === 'attach') {
+                $attachment = new Attachment();
+                $file = $this->getAttachmentManager()->prepareRemoteFile($fileName);
+                $this->getAttachmentManager()->upload($file);
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($file);
+                $em->flush();
+                $attachment->setFile($file);
+                $em->persist($attachment);
+                $em->flush();
+                $responseData['attachment_id'] = $attachment->getId();
+            }
+        
             $responseData['url'] = $url;
             $responseData['saved'] = true;
-
         }
- 
         
-        //return $this->update($pdftemplateEntity);
         return $responseData;
     }
+
+    /**
+     * Create pdf instance based on the template
+     * @param $templateResult
+     * @return mixed
+     */
     protected function instancePDF($templateResult)
     {
-     $orientation = $templateResult->getOrientation() ? $templateResult->getOrientation() : 'P';
-     $unit = $templateResult->getUnit() ? $templateResult->getUnit() : 'mm';
-     $format = $templateResult->getFormat() ? $templateResult->getFormat() : 'A4';
-     $right = $templateResult->getMarginright() ? $templateResult->getMarginright() : '2';
-     $top = $templateResult->getMargintop() ? $templateResult->getMargintop() : '2';
-     $left = $templateResult->getMarginleft() ? $templateResult->getMarginleft() : '2';
-     $bottom = $templateResult->getMarginBottom() ? $templateResult->getMarginBottom() : '2';
-     if($templateResult->getAutobreak() == 1)
-     {
-       $autobreak= true;
-     }
-     else
-     {
-      $autobreak= false;
-     }
-     $pdfObj = $this->get("ibnab_pmanager.tcpdf")->create($orientation,$unit,$format, true, 'UTF-8', false);
-     
-     $pdfObj->SetCreator($templateResult->getAuteur());
-     $pdfObj->SetAuthor($templateResult->getAuteur());
-     $pdfObj->SetMargins($left, $top, $right);
-     $pdfObj->SetAutoPageBreak($autobreak, $bottom);
-     return $pdfObj;
-    }    
+        $orientation = $templateResult->getOrientation() ? $templateResult->getOrientation() : 'P';
+        $unit = $templateResult->getUnit() ? $templateResult->getUnit() : 'mm';
+        $format = $templateResult->getFormat() ? $templateResult->getFormat() : 'A4';
+        $right = $templateResult->getMarginright() ? $templateResult->getMarginright() : '2';
+        $top = $templateResult->getMargintop() ? $templateResult->getMargintop() : '2';
+        $left = $templateResult->getMarginleft() ? $templateResult->getMarginleft() : '2';
+        $bottom = $templateResult->getMarginBottom() ? $templateResult->getMarginBottom() : '2';
+        if ($templateResult->getAutobreak() == 1) {
+            $autobreak= true;
+        } else {
+            $autobreak= false;
+        }
+        
+        $pdfObj = $this->get("ibnab_pmanager.tcpdf")->create($orientation, $unit, $format, true, 'UTF-8', false);
+        
+        $pdfObj->SetCreator($templateResult->getAuteur());
+        $pdfObj->SetAuthor($templateResult->getAuteur());
+        $pdfObj->SetMargins($left, $top, $right);
+        $pdfObj->SetAutoPageBreak($autobreak, $bottom);
+        
+        return $pdfObj;
+    }
+
+    /**
+     * Get export handler service
+     * @return mixed
+     */
     protected function getExportHandler()
     {
         return $this->get('oro_importexport.handler.export');
     }
+
+    /**
+     * Get aattachment manager service
+     * @return mixed
+     */
     protected function getAttachmentManager()
     {
         return $this->get('oro_attachment.manager');
     }
-     /**    
+    
+     /**
      * @Acl(
      *      id="pmanager_defaut_create",
      *      type="entity",
@@ -138,15 +147,15 @@ class DefaultController extends Controller
         $entityClass = $this->get('request')->get('entityClass');
         $entityId = $this->get('request')->get('id');
         $importForm = $this->createForm('ibnab_pmanager_exportpdf');
-        //echo $entityName;die();
+
         return array(
             'entityClass'  => $entityClass,
             'entityId'  => $entityId,
             'form'       => $importForm->createView()
         );
-        
     }
-     /**    
+    
+     /**
      * @Acl(
      *      id="pmanager_defaut_createview",
      *      type="entity",
@@ -159,11 +168,10 @@ class DefaultController extends Controller
     public function createviewAction()
     {
         $entityClass = $this->get('request')->get('entityClass');
-        $entityClass = trim(str_replace("_","\\",$entityClass));
+        $entityClass = trim(str_replace("_", "\\", $entityClass));
         $entityId = $this->get('request')->get('entityId');
         
         $importForm = $this->createForm('ibnab_pmanager_exportpdf');
-        //echo $entityName;die();
         return array(
             'entityClass'  => $entityClass,
             'entityId'  => $entityId,
@@ -171,6 +179,11 @@ class DefaultController extends Controller
         );
         
     }
+
+    /**
+     * @param PDFTemplate $entity
+     * @return array
+     */
     protected function proccess(PDFTemplate $entity)
     {
         $responseData = [
@@ -184,6 +197,7 @@ class DefaultController extends Controller
 
         return $responseData;
     }
+    
     /**
      * @Route("/view/pdf/{entityName}", name="pmanager_defaut_view")
      * @Acl(
@@ -202,5 +216,4 @@ class DefaultController extends Controller
 
         return array('entity' => $entity);
     }
-
 }

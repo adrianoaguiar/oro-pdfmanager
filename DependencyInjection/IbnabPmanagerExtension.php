@@ -29,7 +29,6 @@ class IbnabPmanagerExtension extends Extension
         $loader->load('processor.yml');
         $loader->load('form.yml');
         $loader->load('actions.yml');
-        //$loader->load('search.yml');
+        $loader->load('search.yml');
     }
-
 }

@@ -40,8 +40,7 @@ class TCPDFController
     public function setClassName($className)
     {
         $rc = new ReflectionClass($className);
-        if (!$rc->isSubclassOf('TCPDF') && $rc->getName() != 'TCPDF')
-        {
+        if (!$rc->isSubclassOf('TCPDF') && $rc->getName() != 'TCPDF') {
             throw new \LogicException("Class '{$className}' must inherit from TCPDF");
         }
         $this->className = $className;

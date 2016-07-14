@@ -80,10 +80,9 @@ class PDFTemplateRenderer extends \Twig_Environment
         $sandbox = $this->getExtension('sandbox');
         /** @var \Twig_Sandbox_SecurityPolicy $security */
         $security = $sandbox->getSecurityPolicy();
-        if(isset($allowedData['properties']) && isset($allowedData['methods']))
-        {
-        $security->setAllowedProperties($allowedData['properties']);
-        $security->setAllowedMethods($allowedData['methods']);
+        if (isset($allowedData['properties']) && isset($allowedData['methods'])) {
+            $security->setAllowedProperties($allowedData['properties']);
+            $security->setAllowedMethods($allowedData['methods']);
         }
     }
 
@@ -118,7 +117,7 @@ class PDFTemplateRenderer extends \Twig_Environment
     /**
      * Compile email message
      *
-     * @param EmailTemplateInterface $template
+     * @param PDFTemplateInterface $template
      * @param array                  $templateParams
      *
      * @return array first element is email subject, second - message
@@ -142,7 +141,7 @@ class PDFTemplateRenderer extends \Twig_Environment
     /**
      * Compile preview content
      *
-     * @param EmailTemplate $entity
+     * @param PDFTemplate $entity
      *
      * @return string
      */
