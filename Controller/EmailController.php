@@ -73,7 +73,12 @@ class EmailController extends BaseController
         $modelEmailAttachment->setModified($attachment->getFile()->getUpdatedAt());
         $modelEmailAttachment->setId($attachment->getId());
         $modelEmailAttachment->setEmailAttachment($emailAttachment);
-        $emailModel->addAttachment($modelEmailAttachment);
+
+        //only add attachment first time, second time let request deal with it in EmailProcessor
+        if (!in_array($this->getRequest()->getMethod(),['POST', 'PUT'])) {
+            $emailModel->addAttachment($modelEmailAttachment);
+        }
+        
         return $this->process($emailModel);
     }
 
