@@ -388,7 +388,7 @@
             <li class="email-attachments-list-item">
             <div class="dropdown link-to-record">
                 <a class="no-hash dropdown-toggle" href="javascript: void(0);" data-toggle="dropdown">
-                    <i class="icon icon-file-alt"></i> {{ attachment.fileName|oro_format_filename }}
+                    <i class="icon icon-file-alt"></i> {{ attachment.fileName|oro_format_name }}
                 </a>
                 <ul class="dropdown-menu {{ canCopyToRecord ? '' : 'one'}}" role="menu" aria-labelledby="dropdownMenu">
                     <a class="no-hash" tabindex="-1" href="{{ path('oro_email_attachment', {id: attachment.id}) }}">

@@ -45,6 +45,7 @@ ibnab:
                 entity: Entity variables
             action:
                 preview: Preview
+                clone: Clone PDF
             exportpdf:
                 download_type: Download PDF
                 attach_type: Send Email as Attached

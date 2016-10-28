@@ -55,9 +55,9 @@ class DefaultController extends Controller
             $responseData['resultForPDF'] = $resultForPDF;
             $pdfObj->writeHTML($responseData['resultForPDF'], true, 0, true, 0);
             $pdfObj->lastPage();
-        
-            $fileName   = $this->getExportHandler()->fileSystemOperator
-                ->generateTemporaryFileName($info['entityId'], $outputFormat);
+
+            $fileName = $this->get('oro_importexport.file.file_system_operator')->generateTemporaryFileName(null, 'pdf');
+
             $pdfObj->Output($fileName, 'F');
             $url     =  $this->get('router')->generate(
                 'oro_importexport_export_download',
