@@ -73,7 +73,7 @@ class EmailController extends BaseController
         $modelEmailAttachment->setModified($attachment->getFile()->getUpdatedAt());
         $modelEmailAttachment->setId($attachment->getId());
         $modelEmailAttachment->setEmailAttachment($emailAttachment);
-        $emailModel->setAttachmentsAvailable([$modelEmailAttachment]);
+        $emailModel->addAttachment($modelEmailAttachment);
         return $this->process($emailModel);
     }
 
