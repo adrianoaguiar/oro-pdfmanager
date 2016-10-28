@@ -24,8 +24,9 @@ class PDFTemplateController extends Controller
      */
     public function indexAction()
     {
-       return array();
+        return array();
     }
+    
     /**
      * @Route("pmanager/template/update/{id}", name="pmanager_template_update", requirements={"id"="\d+"}, defaults={"id"=0}))
      * @Acl(
@@ -35,6 +36,9 @@ class PDFTemplateController extends Controller
      *      permission="EDIT"
      * )
      * @Template()
+     * @param PDFTemplate $entity
+     * @param bool $isClone
+     * @return array
      */
     public function updateAction(PDFTemplate $entity, $isClone = false)
     {
@@ -60,6 +64,8 @@ class PDFTemplateController extends Controller
      * @Route("pmanager/template/clone/{id}" , name="pmanager_template_clone" , requirements={"id"="\d+"}, defaults={"id"=0}))
      * @AclAncestor("pmanager_template_create")
      * @Template("IbnabPmanagerBundle:PDFTemplate:update.html.twig")
+     * @param PDFTemplate $entity
+     * @return array
      */
     public function cloneAction(PDFTemplate $entity)
     {
@@ -107,7 +113,7 @@ class PDFTemplateController extends Controller
     }
 
     /**
-     * @param EmailTemplate $entity
+     * @param PDFTemplate $entity
      * @param bool $isClone
      * @return array
      */

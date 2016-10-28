@@ -34,13 +34,17 @@ class PDFTemplateHandler
     protected $translator;
 
     /**
-     * @param FormInterface $form
-     * @param Request       $request
-     * @param ObjectManager $manager
-     * @param Translator    $translator
+     * @param FormInterface         $form
+     * @param Request               $request
+     * @param ObjectManager         $manager
+     * @param TranslatorInterface   $translator
      */
-    public function __construct(FormInterface $form, Request $request, ObjectManager $manager, TranslatorInterface $translator)
-    {
+    public function __construct(
+        FormInterface $form,
+        Request $request,
+        ObjectManager $manager,
+        TranslatorInterface $translator
+    ) {
         $this->form       = $form;
         $this->request    = $request;
         $this->manager    = $manager;

@@ -309,7 +309,6 @@ class PDFTemplate extends ExtendPDFTemplate implements PDFTemplateInterface, Tra
      * @param string $type
      * @param bool $isSystem
      * @param array $extraParams
-     * @internal param $entityName
      */
     public function __construct($name = '', $content = '', $type = 'html', $isSystem = false, $extraParams = array())
     {

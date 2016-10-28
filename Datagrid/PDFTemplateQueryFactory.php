@@ -19,11 +19,13 @@ class PDFTemplateQueryFactory
     protected $fromEmailExpression;
 
     /**
-     * @param EmailOwnerProviderStorage                     $emailOwnerProviderStorage
-     * @param \Oro\Bundle\LocaleBundle\DQL\DQLNameFormatter $formatter
+     * @param PDFTempalteOwnerProviderStorage   $ptemplateOwnerProviderStorage
+     * @param DQLNameFormatter                  $formatter
      */
-    public function __construct(PDFTempalteOwnerProviderStorage $ptemplateOwnerProviderStorage, DQLNameFormatter $formatter)
-    {
+    public function __construct(
+        PDFTempalteOwnerProviderStorage $ptemplateOwnerProviderStorage,
+        DQLNameFormatter $formatter
+    ) {
         $this->ptemplateOwnerProviderStorage = $ptemplateOwnerProviderStorage;
         $this->formatter                 = $formatter;
     }

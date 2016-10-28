@@ -70,16 +70,7 @@ define([
                 result  = this.addUrlParameter(result,"entityClass",this.entityName);
 
             }
-      /*
-      if (this.model.has(this.entityId)) {
-                result  = this.addUrlParameter(result,"entityId",this.model.get(id));
-            } else {
-                result  = this.addUrlParameter(result,"entityId",this.id);
-
-            }
-            return result;
-        }
-       */
+            
             return result;
         }
     });

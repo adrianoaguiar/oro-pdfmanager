@@ -9,23 +9,22 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Ibnab\Bundle\PmanagerBundle\Entity\Repository\PDFTemplateRepository;
-use Ibnab\Bundle\PmanagerBundle\Entity\PDFTemplate;
 
 class ExportPDFHandler
 {
     /**
-     * @var Request
+     * @var Request $request
      */
     protected $request;
     /**
-     * @var Request
+     * @var PDFTemplateRepository $repository
      */
     protected $repository;
 
     /**
      * @param Request       $request
      */
-    public function __construct(Request $request,PDFTemplateRepository $repository)
+    public function __construct(Request $request, PDFTemplateRepository $repository)
     {
         $this->request    = $request;
         $this->repository = $repository;
@@ -37,34 +36,22 @@ class ExportPDFHandler
      */
     public function process()
     {
-        //$this->form->setData($entity);
-
-        if (in_array($this->request->getMethod(), array('POST', 'PUT'))) {          
-          $params = $this->request->get('ibnab_pmanager_exportpdf');
-          if(isset($params['template']) and isset($params['entityClass']) and isset($params['entityId']))
-          {
-             //$template = $params['template'];
-             $resultTemplate = $this->repository->findOneBy(array('id' => $params['template']));
-            if ($resultTemplate) {
-              //echo $resultTemplate->getEntityName()." ".$params['entityClass'];
-              if($resultTemplate->getEntityName()==$params['entityClass'])
-              {
-               return $resultTemplate;
-              }
-              else
-              {
-                return false;
-              }
+        if (in_array($this->request->getMethod(), array('POST', 'PUT'))) {
+            $params = $this->request->get('ibnab_pmanager_exportpdf');
+            if (isset($params['template']) && isset($params['entityClass']) && isset($params['entityId'])) {
+                $resultTemplate = $this->repository->findOneBy(array('id' => $params['template']));
+                if ($resultTemplate) {
+                    if ($resultTemplate->getEntityName() == $params['entityClass']) {
+                        return $resultTemplate;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
             }
-            else
-            {
-              return false;
-            }
-             
-          }       
-
         }
-
+    
         return false;
     }
 }

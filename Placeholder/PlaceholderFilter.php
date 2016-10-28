@@ -7,19 +7,17 @@ use Doctrine\Common\Util\ClassUtils;
 use Oro\Bundle\EntityBundle\ORM\DoctrineHelper;
 use Ibnab\Bundle\PmanagerBundle\Provider\ConfigurationProvider;
 use Oro\Bundle\EntityExtendBundle\Tools\ExtendHelper;
-use Ibnab\Bundle\PmanagerBundle\Entity\PDFTemplate;
 
 class PlaceholderFilter
 {
-
-    /** @var ConfigProvider */
+    /** @var ConfigurationProvider */
     protected $configProvider;
 
     /** @var DoctrineHelper */
     protected $doctrineHelper;
 
     /**
-     * @param ConfigProvider $entityConfigProvider
+     * @param ConfigurationProvider $configProvider
      * @param DoctrineHelper $doctrineHelper
      */
     public function __construct(
@@ -31,11 +29,10 @@ class PlaceholderFilter
     }
     public function getAllowedSection()
     {
-      $values['allowed'] = [];
-      return $values;
+        $values['allowed'] = [];
+        return $values;
     }
     /**
-     *
      * @param object $entity
      * @return bool
      */
@@ -47,19 +44,16 @@ class PlaceholderFilter
         ) {
             return false;
         }
-        //$allowedValues = $this->configProvider->getAllowed();
+
         $allowedSection = $this->getAllowedSection();
         $className = ClassUtils::getClass($entity);
         $allowedSection = $allowedSection['allowed'];
-        foreach($allowedSection as $allowedValue)
-        {
-          if($allowedValue == $className)
-           {
-             
-             return true;
-           }
+        foreach ($allowedSection as $allowedValue) {
+            if ($allowedValue === $className) {
+                return true;
+            }
         }
-        //echo $className;die();
+        
         return false;
     }
 }

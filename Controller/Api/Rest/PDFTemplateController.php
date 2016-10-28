@@ -139,8 +139,6 @@ class PDFTemplateController extends RestController
         );
     }
 
-
-
     /**
      * Get entity Manager
      *

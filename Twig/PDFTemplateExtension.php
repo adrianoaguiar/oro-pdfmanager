@@ -8,11 +8,11 @@ class PDFTemplateExtension extends \Twig_Extension
 {
     const NAME = 'oro_pdftemplate';
 
-    /** @var EmailHolderHelper */
+    /** @var PDFTemplateHolderHelper */
     protected $emailHolderHelper;
 
     /**
-     * @param EmailHolderHelper $emailHolderHelper
+     * @param PDFTemplateHolderHelper $emailHolderHelper
      */
     public function __construct(PDFTemplateHolderHelper $emailHolderHelper)
     {
@@ -39,9 +39,7 @@ class PDFTemplateExtension extends \Twig_Extension
     {
         $result = $this->emailHolderHelper->getEmail($object);
 
-        return null !== $result
-            ? $result
-            : '';
+        return (null !== $result) ? $result : '';
     }
 
     /**

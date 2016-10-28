@@ -21,9 +21,6 @@ class IbnabPmanagerBundle implements Migration
         /** Tables generation **/
         $this->createPDFTemplateTable($schema);
         $this->createPDFTemplateTranslationTable($schema);
-        /** Foreign keys generation **/
-        //$this->addPDFTemplateTableForeignKeys($schema);
-        //$this->addPDFTemplateTranslationTableForeignKeys($schema);
     }
 
 
@@ -38,9 +35,9 @@ class IbnabPmanagerBundle implements Migration
         $table->addColumn('id', 'integer', ['autoincrement' => true]);
         $table->addColumn('isSystem', 'boolean', []);
         $table->addColumn('isEditable', 'boolean', []);
-        $table->addColumn('name', 'string',['length' => 255]);
+        $table->addColumn('name', 'string', ['length' => 255]);
         $table->addColumn('description', 'text', ['notnull' => false]);
-        $table->addColumn('css', 'text' , ['notnull' => false]);
+        $table->addColumn('css', 'text', ['notnull' => false]);
         $table->addColumn('format', 'string', ['notnull' => false ,'length' => 4]);
         $table->addColumn('unit', 'string', ['notnull' => false ,'length' => 4]);
         $table->addColumn('orientation', 'string', ['notnull' => false ,'length' => 2]);
@@ -76,7 +73,7 @@ class IbnabPmanagerBundle implements Migration
             ['user_owner_id'],
             ['id'],
             []
-        );      
+        );
     }
 
     /**

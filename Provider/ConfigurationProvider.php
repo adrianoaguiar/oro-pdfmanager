@@ -6,7 +6,7 @@ use Oro\Bundle\ConfigBundle\Config\ConfigManager;
 
 class ConfigurationProvider
 {
-    const Allow_FIELD = 'ibnab_pmanger.allow';
+    const ALLOW_FIELD = 'ibnab_pmanger.allow';
 
     /**
      * @var ConfigManager
@@ -26,8 +26,6 @@ class ConfigurationProvider
      */
     public function getAllowed()
     {
-        return $this->configManager->get(self::Allow_FIELD);
+        return $this->configManager->get(self::ALLOW_FIELD);
     }
-
-
 }
